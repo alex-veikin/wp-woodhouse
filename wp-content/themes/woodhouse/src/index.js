@@ -37,6 +37,24 @@ $(document).ready(function(){
     });
 
 
+    // function exampleHeight() {
+    //     let items = $('.example-content');
+    //     let max = 0;
+    //     items.each(function() {
+    //         let h = $(this).height();
+    //         max = h > max ? h : max;
+    //     });
+    //
+    //     items.height(max);
+    // }
+    //
+    // exampleHeight();
+    //
+    // $(window).resize(function () {
+    //     exampleHeight();
+    // });
+
+
 
     $('.owl-carousel').owlCarousel({
         autoplay: true,

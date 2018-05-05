@@ -1,15 +1,7 @@
 <?php
-/**
- * Initialize the custom Theme Options.
- */
+
 add_action( 'init', 'custom_theme_options' );
 
-/**
- * Build the custom settings & update OptionTree.
- *
- * @return    void
- * @since     2.0
- */
 function custom_theme_options() {
 
 	/* OptionTree is not loaded yet, or this is not an admin request */

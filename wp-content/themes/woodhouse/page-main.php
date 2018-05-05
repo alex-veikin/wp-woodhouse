@@ -1,6 +1,6 @@
 <?php
 /**
- * Template name: Главная
+ * Template name: Главная страница
  */
 
 get_header();
@@ -119,7 +119,7 @@ $examples  = get_post_meta( $post->ID, 'examples_items', true );
                                 <img src="<?php echo $item['image']; ?>"
                                      alt="">
                             </div>
-                            <div class="col-12 col-sm-6">
+                            <div class="example-content col-12 col-sm-6">
                                 <div class="mb-2">
                                     <div class="example-title">
                                         Тип <?php echo $item['example_type']

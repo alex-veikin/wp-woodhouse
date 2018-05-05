@@ -1,6 +1,6 @@
 <?php
 /**
- * Template name: Контакты
+ * Template name: Страница контактов
  */
 
 get_header();

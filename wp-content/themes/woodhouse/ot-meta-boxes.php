@@ -1,17 +1,7 @@
 <?php
-/**
- * Initialize the custom Meta Boxes.
- */
+
 add_action( 'admin_init', 'custom_meta_boxes' );
 
-/**
- * Meta Boxes demo code.
- *
- * You can find all the available option types in ot-theme-options.php.
- *
- * @return    void
- * @since     2.0
- */
 function custom_meta_boxes() {
 
 	$page_main = [
@@ -201,6 +191,69 @@ function custom_meta_boxes() {
 		],
 	];
 
+	$page_products = [
+		'id'       => 'page_products',
+		'title'    => 'Галерея продукции',
+		'desc'     => '',
+		'pages'    => [ 'page' ],
+		'context'  => 'normal',
+		'priority' => 'high',
+		'fields'   => [
+			[
+				'label' => 'Показывать секцию',
+				'id'    => 'product_images_show',
+				'type'  => 'on-off',
+				'std'   => 'on',
+			],
+			[
+				'id'       => 'product_images_items',
+				'label'    => 'Галерея',
+				'type'     => 'list-item',
+				'settings' => [
+					[
+						'label' => 'Фото',
+						'id'    => 'image',
+						'type'  => 'upload',
+					],
+				],
+			],
+		],
+	];
+
+	$page_reviews = [
+		'id'       => 'page_reviews',
+		'title'    => 'Настройки страницы отзывов',
+		'desc'     => '',
+		'pages'    => [ 'page' ],
+		'context'  => 'normal',
+		'priority' => 'high',
+		'fields'   => [
+			[
+				'id'       => 'reviews_items',
+				'label'    => 'Отзывы',
+				'type'     => 'list-item',
+				'settings' => [
+					[
+						'label' => 'Имя',
+						'id'    => 'name',
+						'type'  => 'text',
+					],
+					[
+						'label' => 'Отзыв',
+						'id'    => 'review',
+						'type'  => 'textarea',
+						'rows'  => '10',
+					],
+					[
+						'label' => 'Фото',
+						'id'    => 'image',
+						'type'  => 'upload',
+					],
+				],
+			],
+		],
+	];
+
 	$page_contacts = [
 		'id'       => 'page_contacts',
 		'title'    => 'Настройки страницы контактов',
@@ -238,79 +291,9 @@ function custom_meta_boxes() {
 		],
 	];
 
-	/**
-	 * Create a custom meta boxes array that we pass to
-	 * the OptionTree Meta Box API Class.
-	 */
-	$my_meta_box = [
-		'id'       => 'demo_meta_box',
-		'title'    => __( 'Demo Meta Box', 'theme-text-domain' ),
-		'desc'     => '',
-		'pages'    => [ 'post' ],
-		'context'  => 'normal',
-		'priority' => 'high',
-		'fields'   => [
-			[
-				'label' => __( 'Conditions', 'theme-text-domain' ),
-				'id'    => 'demo_conditions',
-				'type'  => 'tab',
-			],
-			[
-				'label' => __( 'Show Gallery', 'theme-text-domain' ),
-				'id'    => 'demo_show_gallery',
-				'type'  => 'on-off',
-				'desc'  => sprintf( __( 'Shows the Gallery when set to %s.',
-					'theme-text-domain' ), '<code>on</code>' ),
-				'std'   => 'off',
-			],
-			[
-				'label'     => '',
-				'id'        => 'demo_textblock',
-				'type'      => 'textblock',
-				'desc'      => __( 'Congratulations, you created a gallery!',
-					'theme-text-domain' ),
-				'operator'  => 'and',
-				'condition' => 'demo_show_gallery:is(on),demo_gallery:not()',
-			],
-			[
-				'label'     => __( 'Gallery', 'theme-text-domain' ),
-				'id'        => 'demo_gallery',
-				'type'      => 'gallery',
-				'desc'      => sprintf( __( 'This is a Gallery option type. It displays when %s.',
-					'theme-text-domain' ),
-					'<code>demo_show_gallery:is(on)</code>' ),
-				'condition' => 'demo_show_gallery:is(on)',
-			],
-			[
-				'label' => __( 'More Options', 'theme-text-domain' ),
-				'id'    => 'demo_more_options',
-				'type'  => 'tab',
-			],
-			[
-				'label' => __( 'Text', 'theme-text-domain' ),
-				'id'    => 'demo_text',
-				'type'  => 'text',
-				'desc'  => __( 'This is a demo Text field.',
-					'theme-text-domain' ),
-			],
-			[
-				'label' => __( 'Textarea', 'theme-text-domain' ),
-				'id'    => 'demo_textarea',
-				'type'  => 'textarea',
-				'desc'  => __( 'This is a demo Textarea field.',
-					'theme-text-domain' ),
-			],
-		],
-	];
 
-	/**
-	 * Register our meta boxes using the
-	 * ot_register_meta_box() function.
-	 */
 	if ( function_exists( 'ot_register_meta_box' ) ) {
-//		ot_register_meta_box( $meta_box_review );
-
-		$post_id = isset( $_GET['post'] ) ? $_GET['post']
+		$post_id       = isset( $_GET['post'] ) ? $_GET['post']
 			: ( isset( $_POST['post_ID'] ) ? $_POST['post_ID'] : 0 );
 		$template_file = get_post_meta( $post_id, '_wp_page_template', true );
 
@@ -318,10 +301,17 @@ function custom_meta_boxes() {
 			ot_register_meta_box( $page_main );
 		}
 
+		if ( $template_file == 'page-products.php' ) {
+			ot_register_meta_box( $page_products );
+		}
+
+		if ( $template_file == 'page-reviews.php' ) {
+			ot_register_meta_box( $page_reviews );
+		}
+
 		if ( $template_file == 'page-contacts.php' ) {
 			ot_register_meta_box( $page_contacts );
 		}
-
 	}
 
 }
